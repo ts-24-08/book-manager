@@ -5,7 +5,7 @@ import { BookForm } from './components/BookForm';
 import { Book, BookFormData } from './types';
 import { useThemeStore } from './store/theme';
 
-const API_URL = 'http://localhost:3000/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 function App() {
   const [books, setBooks] = useState<Book[]>([]);
