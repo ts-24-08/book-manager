@@ -6,7 +6,7 @@ const app = express();
 const port = 3000;
 
 // Initialize SQLite database
-const db = new Database('books.db');
+const db = new Database('./books.db');
 
 // Enable CORS
 app.use(cors());

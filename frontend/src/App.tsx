@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Plus, Search, Moon, Sun } from 'lucide-react';
 import { BookCard } from './components/BookCard';
 import { BookForm } from './components/BookForm';
 import { Book, BookFormData } from './types';
 import { useThemeStore } from './store/theme';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 function App() {
   const [books, setBooks] = useState<Book[]>([]);
