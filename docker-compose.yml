@@ -9,7 +9,8 @@ services:
       - backend
     container_name: book-manager-frontend
     ports:
-      - 8080:80
+      - 80:80
+      - 443:443
     networks:
       - book-manager-network
 

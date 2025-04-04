@@ -1,27 +1,27 @@
-import { useEffect, useState } from 'react';
-import { Plus, Search, Moon, Sun } from 'lucide-react';
-import { BookCard } from './components/BookCard';
-import { BookForm } from './components/BookForm';
-import { Book, BookFormData } from './types';
-import { useThemeStore } from './store/theme';
+import { useEffect, useState } from "react";
+import { Plus, Search, Moon, Sun } from "lucide-react";
+import { BookCard } from "./components/BookCard";
+import { BookForm } from "./components/BookForm";
+import { Book, BookFormData } from "./types";
+import { useThemeStore } from "./store/theme";
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
 
 function App() {
   const [books, setBooks] = useState<Book[]>([]);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [editingBook, setEditingBook] = useState<Book | null>(null);
   const { isDarkMode, toggleTheme } = useThemeStore();
 
   useEffect(() => {
     fetchBooks();
-    
+
     // Apply dark mode class
     if (isDarkMode) {
-      document.documentElement.classList.add('dark');
+      document.documentElement.classList.add("dark");
     } else {
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.remove("dark");
     }
   }, [isDarkMode]);
 
@@ -31,16 +31,16 @@ function App() {
       const data = await response.json();
       setBooks(data);
     } catch (error) {
-      console.error('Error fetching books:', error);
+      console.error("Error fetching books:", error);
     }
   };
 
   const handleAddBook = async (formData: BookFormData) => {
     try {
       const response = await fetch(`${API_URL}/books`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
@@ -53,7 +53,7 @@ function App() {
       setShowForm(false);
       fetchBooks();
     } catch (error) {
-      console.error('Error adding book:', error);
+      console.error("Error adding book:", error);
     }
   };
 
@@ -62,9 +62,9 @@ function App() {
 
     try {
       const response = await fetch(`${API_URL}/books/${editingBook.id}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
@@ -77,14 +77,14 @@ function App() {
       setEditingBook(null);
       fetchBooks();
     } catch (error) {
-      console.error('Error updating book:', error);
+      console.error("Error updating book:", error);
     }
   };
 
   const handleDeleteBook = async (id: string) => {
     try {
       const response = await fetch(`${API_URL}/books/${id}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
 
       if (!response.ok) {
@@ -94,7 +94,7 @@ function App() {
 
       fetchBooks();
     } catch (error) {
-      console.error('Error deleting book:', error);
+      console.error("Error deleting book:", error);
     }
   };
 
@@ -108,9 +108,14 @@ function App() {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-            Book Management
-          </h1>
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+              Book Management
+            </h1>
+            <h3 className="text-xl font-bold text-gray-700 dark:text-white">
+              The greatest book management app on earth!
+            </h3>
+          </div>
           <button
             onClick={toggleTheme}
             className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
