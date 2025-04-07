@@ -21,14 +21,29 @@ export const BookForm: React.FC<BookFormProps> = ({
       genre: "",
       description: "",
       price: 0,
-      image_url: "",
+      image: null,
+      base64Image: null,
     }
   );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    onSubmit(formData);
+    if (formData.image) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const bookDataWithBase64 = {
+          ...formData,
+          image: null,
+          base64Image: reader.result?.split(",")[1],
+        };
+        console.log("Submitting book with image:", bookDataWithBase64);
+        onSubmit(bookDataWithBase64);
+      };
+      reader.readAsDataURL(formData.image);
+    } else {
+      console.log("Submitting book:", formData);
+      onSubmit(formData);
+    }
   };
 
   return (
@@ -130,14 +145,17 @@ export const BookForm: React.FC<BookFormProps> = ({
 
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                Image URL
+                Image
               </label>
               <input
-                type="url"
+                type="file"
+                name="image"
                 required
-                value={formData.image_url}
                 onChange={(e) =>
-                  setFormData({ ...formData, image_url: e.target.value })
+                  setFormData({
+                    ...formData,
+                    image: e.target.files?.[0] || null,
+                  })
                 }
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               />

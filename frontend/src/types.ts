@@ -6,7 +6,7 @@ export interface Book {
   genre: string;
   description: string;
   price: number;
-  image_url: string;
+  image: string;
   created_at: string;
 }
 
@@ -17,5 +17,6 @@ export interface BookFormData {
   genre: string;
   description: string;
   price: number;
-  image_url: string;
+  image: File | null;
+  base64Image: string | null;
 }
