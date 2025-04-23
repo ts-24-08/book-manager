@@ -1,5 +1,5 @@
 # Use the official Node.js runtime as the base image
-FROM node:lts as build
+FROM node:current-slim AS build
 
 # Set the working directory in the container
 WORKDIR /app
@@ -26,11 +26,11 @@ FROM nginx:alpine
 COPY --from=build /app/dist /usr/share/nginx/html
 
 # Copy ssl Certs to nginx
-# COPY ./bookmanager.local-key.pem /etc/ssl
-# COPY ./bookmanager.local.pem /etc/ssl
+COPY ./bookmanager.local-key.pem /etc/ssl
+COPY ./bookmanager.local.pem /etc/ssl
 
 # Copy Reverse Proxy configuration file to Nginx
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx_ssl.conf /etc/nginx/conf.d/default.conf
 
 # Expose port 80 for the Nginx server
 EXPOSE 443
